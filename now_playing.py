@@ -16,6 +16,9 @@ console = Console()
 get_url = "http://localhost:4533/rest/getNowPlaying.view"
 album_art_url = "http://localhost:4533/rest/getCoverArt.view"
 
+light = wizlight("192.168.0.10")
+light.turn_on(PilotBuilder(brightness = 255))
+
 load_dotenv()
 USERNAME = os.getenv("NAVIDROME_USERNAME")
 PASSWORD = os.getenv("NAVIDROME_PASSWORD")
@@ -78,14 +81,21 @@ async def poll_music():
             r2 = requests.get(album_art_url, params=album_art_params)
             with open("cover.jpg", "wb") as f:
                 f.write(r2.content)
-            # the 3 lines to make it either for single album immersion or dynamically change with each album
-            new_hues = extract_hues()
-            top_hues.clear()
-            top_hues.extend(new_hues)
+
+            # these are for when i need single album mode
             print("Go touch some grass")
+            subprocess.run(["notify-send","Go touch grass","time to take a sip"])
             light = wizlight("192.168.0.10")
-            await light.turn_on(PilotBuilder(brightness = 20))
-            #exit()
+            for i in range (6):
+                await light.turn_on(PilotBuilder(brightness = 51*(5-i)))
+                await asyncio.sleep(1)
+            exit()
+
+            # the 3 lines to make it either for single album immersion or dynamically change with each album
+            #new_hues = extract_hues()
+            #top_hues.clear()
+            #top_hues.extend(new_hues)
+
         last_album = album
     
         subprocess.run(["clear"])
