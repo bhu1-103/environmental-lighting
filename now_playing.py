@@ -78,9 +78,10 @@ async def poll_music():
             r2 = requests.get(album_art_url, params=album_art_params)
             with open("cover.jpg", "wb") as f:
                 f.write(r2.content)
-            #new_hues = extract_hues()
-            #top_hues.clear()
-            #top_hues.extend(new_hues)
+            # the 3 lines to make it either for single album immersion or dynamically change with each album
+            new_hues = extract_hues()
+            top_hues.clear()
+            top_hues.extend(new_hues)
             print("Go touch some grass")
             light = wizlight("192.168.0.10")
             await light.turn_on(PilotBuilder(brightness = 20))
