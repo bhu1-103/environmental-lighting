@@ -61,7 +61,8 @@ async def poll_music():
 
         if not entries:
             print("[#ff0000]Nothing currently playing[/#ff0000]")
-            exit()
+            await asyncio.sleep(5)
+            continue
         entry = entries[-1]
 
         title = entry["title"]
