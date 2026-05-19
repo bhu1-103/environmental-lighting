@@ -28,8 +28,27 @@ params = {
         "f": "json"
         }
 
+r1 = requests.get(get_url, params=params)
+data = r1.json()
+entries = data["subsonic-response"]["nowPlaying"]["entry"]
+entry = entries[-1]
+cover_art_id = entry["coverArt"]
+album_art_params = {
+    **params,
+    "id": cover_art_id
+    }
+r2 = requests.get(album_art_url, params=album_art_params)
+
+with open("cover.jpg", "wb") as f:
+    f.write(r2.content)
+
 async def poll_music():
+    r1 = requests.get(get_url, params=params)
+    data = r1.json()
+    entries = data["subsonic-response"]["nowPlaying"]["entry"]
+    entry = entries[-1]
     last_title = None
+    last_album = entry["album"]
     while True:
         r1 = requests.get(get_url, params=params)
         data = r1.json()
@@ -49,17 +68,21 @@ async def poll_music():
         album = entry["album"]
         artist = entry["artist"]
         track_no = entry["track"]
-        cover_art_id = entry["coverArt"]
 
-        album_art_params = {
-            **params,
-            "id": cover_art_id
-        }
-
-        r2 = requests.get(album_art_url, params=album_art_params)
-
-        with open("cover.jpg", "wb") as f:
-            f.write(r2.content)
+        if album != last_album:
+            cover_art_id = entry["coverArt"]
+            album_art_params = {
+                **params,
+                "id": cover_art_id
+            }
+            r2 = requests.get(album_art_url, params=album_art_params)
+            with open("cover.jpg", "wb") as f:
+                f.write(r2.content)
+            print("Go touch some grass")
+            light = wizlight("192.168.0.10")
+            await light.turn_on(PilotBuilder(brightness = 20))
+            #exit()
+        last_album = album
     
         subprocess.run(["clear"])
         subprocess.run(["kitty","+kitten","icat","--place","12x12@1x1","cover.jpg"])
@@ -72,6 +95,9 @@ async def poll_music():
         table.add_row(f"[#c8a8c8]{track_no}[/#c8a8c8]",f"[#ff8fab]{title}[/#ff8fab]",f"[#20c498]{artist}[/#20c498]")
         console.print(Padding(table, (0,0,0,14)))
         await asyncio.sleep(5)
+
+with open("cover.jpg", "wb") as f:
+    f.write(r2.content)
 
 img = Image.open("cover.jpg").convert("RGB")
 img = img.resize((64,64))
