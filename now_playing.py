@@ -28,42 +28,50 @@ params = {
         "f": "json"
         }
 
-r1 = requests.get(get_url, params=params)
-data = r1.json()
+async def poll_music():
+    last_title = None
+    while True:
+        r1 = requests.get(get_url, params=params)
+        data = r1.json()
 
-entries = data["subsonic-response"]["nowPlaying"]["entry"]
+        entries = data["subsonic-response"]["nowPlaying"]["entry"]
 
-if not entries:
-    print("[#ff0000]Nothing currently playing[/#ff0000]")
-    exit()
-entry = entries[-1]
+        if not entries:
+            print("[#ff0000]Nothing currently playing[/#ff0000]")
+            exit()
+        entry = entries[-1]
 
-title = entry["title"]
-album = entry["album"]
-artist = entry["artist"]
-track_no = entry["track"]
-cover_art_id = entry["coverArt"]
+        title = entry["title"]
+        if title == last_title:
+            await asyncio.sleep(5)
+            continue
+        last_title = title
+        album = entry["album"]
+        artist = entry["artist"]
+        track_no = entry["track"]
+        cover_art_id = entry["coverArt"]
 
-album_art_params = {
-        **params,
-        "id": cover_art_id
+        album_art_params = {
+            **params,
+            "id": cover_art_id
         }
 
-r2 = requests.get(album_art_url, params=album_art_params)
+        r2 = requests.get(album_art_url, params=album_art_params)
 
-with open("cover.jpg", "wb") as f:
-    f.write(r2.content)
+        with open("cover.jpg", "wb") as f:
+            f.write(r2.content)
+    
+        subprocess.run(["clear"])
+        subprocess.run(["kitty","+kitten","icat","--place","12x12@1x1","cover.jpg"])
 
-subprocess.run(["clear"])
-subprocess.run(["kitty","+kitten","icat","--place","12x12@1x1","cover.jpg"])
+        table = Table(title=f"[#666666]Now Playing[/#666666] [#ff0066]{album}[/#ff0066]")
+        table.add_column("Track")
+        table.add_column("Title")
+        table.add_column("Artist")
 
-table = Table(title=f"[#666666]Now Playing[/#666666] [#ff0066]{album}[/#ff0066]")
-table.add_column("Track")
-table.add_column("Title")
-table.add_column("Artist")
-
-table.add_row(f"[#c8a8c8]{track_no}[/#c8a8c8]",f"[#ff8fab]{title}[/#ff8fab]",f"[#20c498]{artist}[/#20c498]")
-console.print(Padding(table, (0,0,0,14)))
+        table.add_row(f"[#c8a8c8]{track_no}[/#c8a8c8]",f"[#ff8fab]{title}[/#ff8fab]",f"[#20c498]{artist}[/#20c498]")
+        console.print(Padding(table, (0,0,0,14)))
+        await asyncio.sleep(5)
 
 img = Image.open("cover.jpg").convert("RGB")
 img = img.resize((64,64))
@@ -80,27 +88,52 @@ sorted_colors = sorted(filtered,key=lambda x: x[0],reverse=True)
 top_hues = []
 
 for item in sorted_colors:
-    hue = item[1] / 32
+    hue = (item[1] + 0.5) / 32
     if hue not in top_hues:
         top_hues.append(hue)
     if len(top_hues) == 5:
         break
+top_hues.sort()
 
 def hsv2rgb(hue,s=1.0,v=1.0):
     r,g,b = colorsys.hsv_to_rgb(hue,s,v)
     return (int(r*255),int(g*255),int(b*255))
 
-best_color = hsv2rgb(top_hues[1])
+'''for i in range (0,5):
+    print(hsv2rgb(top_hues[i]))
+print("these are the 5 colors")'''
+
+transition_time = 60
+def transition(a,b,t):
+    return a + (b - a) * t
+
+async def light_update():
+    light = wizlight("192.168.0.10")
+    while True:
+        for i in range(len(top_hues)):
+            start_hue = top_hues[i]
+            end_hue = top_hues[(i+1) % len(top_hues)]
+            diff = end_hue - start_hue
+            if abs(diff) > 0.5:
+                if diff > 0:
+                    start_hue += 1
+                else:
+                    end_hue += 1
+            steps = 60
+
+            for step in range(steps):
+                t = step/steps
+                cur_hue = transition(start_hue, end_hue, t)
+                cur_hue %= 1.0
+                color = hsv2rgb(cur_hue)
+                #print(color)
+                await light.turn_on(PilotBuilder(rgb = color))
+                await asyncio.sleep(transition_time/steps)
 
 async def main():
-    light = wizlight("192.168.0.10")
-    for hue in top_hues:
-        color = hsv2rgb(hue)
-        #print(color)
-        await light.turn_on(PilotBuilder(rgb = color))
-        await asyncio.sleep(1)
-print(best_color)
+    await asyncio.gather(
+        poll_music(),
+        light_update()
+        )
 
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+asyncio.run(main())
