@@ -78,6 +78,9 @@ async def poll_music():
             r2 = requests.get(album_art_url, params=album_art_params)
             with open("cover.jpg", "wb") as f:
                 f.write(r2.content)
+            #new_hues = extract_hues()
+            #top_hues.clear()
+            #top_hues.extend(new_hues)
             print("Go touch some grass")
             light = wizlight("192.168.0.10")
             await light.turn_on(PilotBuilder(brightness = 20))
@@ -96,27 +99,31 @@ async def poll_music():
         console.print(Padding(table, (0,0,0,14)))
         await asyncio.sleep(5)
 
-img = Image.open("cover.jpg").convert("RGB")
-img = img.resize((64,64))
-colors = img.getcolors(1000000)
-filtered = []
+def extract_hues():
+    img = Image.open("cover.jpg").convert("RGB")
+    img = img.resize((64,64))
+    colors = img.getcolors(1000000)
+    filtered = []
 
-for count, color in colors:
-    r,g,b = [x/255 for x in color]
-    h,s,v = colorsys.rgb_to_hsv(r,g,b)
-    hue_normal = int(h*32)
-    filtered.append((count,hue_normal))
+    for count, color in colors:
+        r,g,b = [x/255 for x in color]
+        h,s,v = colorsys.rgb_to_hsv(r,g,b)
+        hue_normal = int(h*32)
+        filtered.append((count,hue_normal))
 
-sorted_colors = sorted(filtered,key=lambda x: x[0],reverse=True)
-top_hues = []
+    sorted_colors = sorted(filtered,key=lambda x: x[0],reverse=True)
+    hues = []
 
-for item in sorted_colors:
-    hue = (item[1] + 0.5) / 32
-    if hue not in top_hues:
-        top_hues.append(hue)
-    if len(top_hues) == 5:
-        break
-top_hues.sort()
+    for item in sorted_colors:
+        hue = (item[1] + 0.5) / 32
+        if hue not in hues:
+            hues.append(hue)
+        if len(hues) == 5:
+            break
+    hues.sort()
+    return hues
+
+top_hues = extract_hues()
 
 def hsv2rgb(hue,s=1.0,v=1.0):
     r,g,b = colorsys.hsv_to_rgb(hue,s,v)
@@ -124,7 +131,7 @@ def hsv2rgb(hue,s=1.0,v=1.0):
 
 '''for i in range (0,5):
     print(hsv2rgb(top_hues[i]))
-print("these are the 5 colors")'''
+    print("these are the 5 colors")'''
 
 transition_time = 60
 def transition(a,b,t):
