@@ -22,6 +22,7 @@ light.turn_on(PilotBuilder(brightness = 255))
 load_dotenv()
 USERNAME = os.getenv("NAVIDROME_USERNAME")
 PASSWORD = os.getenv("NAVIDROME_PASSWORD")
+MODE = os.getenv("MODE")
 
 params = {
         "u": USERNAME,
@@ -83,18 +84,20 @@ async def poll_music():
                 f.write(r2.content)
 
             # these are for when i need single album mode
-            print("Go touch some grass")
-            subprocess.run(["notify-send","Go touch grass","time to take a sip"])
-            light = wizlight("192.168.0.10")
-            for i in range (6):
-                await light.turn_on(PilotBuilder(brightness = 51*(5-i)))
-                await asyncio.sleep(1)
-            exit()
+            if MODE == "1":
+                print("Go touch some grass")
+                subprocess.run(["notify-send","Go touch grass","time to take a sip"])
+                light = wizlight("192.168.0.10")
+                for i in range (6):
+                    await light.turn_on(PilotBuilder(brightness = 51*(5-i)))
+                    await asyncio.sleep(1)
+                exit()
 
             # the 3 lines to make it either for single album immersion or dynamically change with each album
-            #new_hues = extract_hues()
-            #top_hues.clear()
-            #top_hues.extend(new_hues)
+            elif MODE == "2":
+                new_hues = extract_hues()
+                top_hues.clear()
+                top_hues.extend(new_hues)
 
         last_album = album
     
