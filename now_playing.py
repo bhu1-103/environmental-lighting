@@ -20,10 +20,7 @@ load_dotenv()
 USERNAME = os.getenv("NAVIDROME_USERNAME")
 PASSWORD = os.getenv("NAVIDROME_PASSWORD")
 MODE = os.getenv("MODE")
-BRIGHTNESS = os.getenv("BRIGHTNESS")
-
-light = wizlight("192.168.0.10")
-light.turn_on(PilotBuilder(brightness = BRIGHTNESS))
+BRIGHTNESS = int(os.getenv("BRIGHTNESS"))
 
 params = {
         "u": USERNAME,
@@ -54,6 +51,8 @@ async def poll_music():
     entry = entries[-1]
     last_title = None
     last_album = entry["album"]
+    light = wizlight("192.168.0.10")
+    await light.turn_on(PilotBuilder(brightness = BRIGHTNESS))
     while True:
         r1 = requests.get(get_url, params=params)
         data = r1.json()
@@ -88,7 +87,6 @@ async def poll_music():
             if MODE == "1":
                 print("Go touch some grass")
                 subprocess.run(["notify-send","Go touch grass","time to take a sip"])
-                light = wizlight("192.168.0.10")
                 for i in range (6):
                     await light.turn_on(PilotBuilder(brightness = 51*(5-i)))
                     await asyncio.sleep(1)
