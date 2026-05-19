@@ -16,13 +16,14 @@ console = Console()
 get_url = "http://localhost:4533/rest/getNowPlaying.view"
 album_art_url = "http://localhost:4533/rest/getCoverArt.view"
 
-light = wizlight("192.168.0.10")
-light.turn_on(PilotBuilder(brightness = 255))
-
 load_dotenv()
 USERNAME = os.getenv("NAVIDROME_USERNAME")
 PASSWORD = os.getenv("NAVIDROME_PASSWORD")
 MODE = os.getenv("MODE")
+BRIGHTNESS = os.getenv("BRIGHTNESS")
+
+light = wizlight("192.168.0.10")
+light.turn_on(PilotBuilder(brightness = BRIGHTNESS))
 
 params = {
         "u": USERNAME,
