@@ -96,9 +96,6 @@ async def poll_music():
         console.print(Padding(table, (0,0,0,14)))
         await asyncio.sleep(5)
 
-with open("cover.jpg", "wb") as f:
-    f.write(r2.content)
-
 img = Image.open("cover.jpg").convert("RGB")
 img = img.resize((64,64))
 colors = img.getcolors(1000000)
