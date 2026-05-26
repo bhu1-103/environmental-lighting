@@ -8,6 +8,7 @@ import subprocess
 from rich.padding import Padding
 from PIL import Image
 import asyncio
+import time
 from pywizlight import wizlight, PilotBuilder
 import colorsys
 
@@ -15,6 +16,7 @@ console = Console()
 
 get_url = "http://localhost:4533/rest/getNowPlaying.view"
 album_art_url = "http://localhost:4533/rest/getCoverArt.view"
+supersonic_check = subprocess.run(["pgrep", "-af", "supersonic-desktop"], capture_output=True)
 
 load_dotenv()
 USERNAME = os.getenv("NAVIDROME_USERNAME")
@@ -30,9 +32,24 @@ params = {
         "f": "json"
         }
 
+subprocess.run(["supersonic-desktop", "--play"])
+if supersonic_check.returncode != 0:
+    console.print("[#ff0000]Supersonic is closed. Exiting script.[/#ff0000]")
+    exit()
+
 r1 = requests.get(get_url, params=params)
 data = r1.json()
-entries = data["subsonic-response"]["nowPlaying"]["entry"]
+
+def get_entries(data):
+    entries = data["subsonic-response"]["nowPlaying"].get("entry", [])
+    if not entries:
+        print("[#ff0000]Nothing currently playing[/#ff0000]")
+        print("[#ff3333]is supersonic running?[/#ff3333]")
+        print("[#ff6666]attempting to play music on supersonic[/#ff6666]")
+        subprocess.run(["supersonic-desktop", "--play"])
+    return entries
+
+entries = get_entries(data)
 entry = entries[-1]
 cover_art_id = entry["coverArt"]
 album_art_params = {
@@ -47,7 +64,7 @@ with open("cover.jpg", "wb") as f:
 async def poll_music():
     r1 = requests.get(get_url, params=params)
     data = r1.json()
-    entries = data["subsonic-response"]["nowPlaying"]["entry"]
+    entries = get_entries(data)
     entry = entries[-1]
     last_title = None
     last_album = entry["album"]
@@ -57,12 +74,7 @@ async def poll_music():
         r1 = requests.get(get_url, params=params)
         data = r1.json()
 
-        entries = data["subsonic-response"]["nowPlaying"]["entry"]
-
-        if not entries:
-            print("[#ff0000]Nothing currently playing[/#ff0000]")
-            await asyncio.sleep(5)
-            continue
+        entries = get_entries(data)
         entry = entries[-1]
 
         title = entry["title"]
