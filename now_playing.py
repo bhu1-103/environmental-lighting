@@ -108,8 +108,7 @@ async def poll_music():
             # the 3 lines to make it either for single album immersion or dynamically change with each album
             elif MODE == "2":
                 new_hues = extract_hues()
-                top_hues.clear()
-                top_hues.extend(new_hues)
+                top_hues[:] = new_hues
 
         last_album = album
     
@@ -165,10 +164,12 @@ def transition(a,b,t):
 
 async def light_update():
     light = wizlight("192.168.0.10")
+    current_hue = top_hues[0]
+
     while True:
         for i in range(len(top_hues)):
-            start_hue = top_hues[i]
-            end_hue = top_hues[(i+1) % len(top_hues)]
+            start_hue = current_hue
+            end_hue = top_hues[i]
             diff = end_hue - start_hue
             if abs(diff) > 0.5:
                 if diff > 0:
@@ -185,6 +186,7 @@ async def light_update():
                 #print(color)
                 await light.turn_on(PilotBuilder(rgb = color))
                 await asyncio.sleep(transition_time/steps)
+            current_hue = cur_hue
 
 async def main():
     await asyncio.gather(
