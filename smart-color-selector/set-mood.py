@@ -4,6 +4,7 @@ import ollama
 import asyncio
 import colorsys
 from pywizlight import wizlight, PilotBuilder
+from rich import print
 
 light_ip = "192.168.0.10"
 
@@ -29,7 +30,8 @@ def hsv_to_rgb(h, s=1.0, v=1.0):
     return (int(r * 255), int(g * 255), int(b * 255))
 
 def get_palette():
-    sentence = input("Enter a sentence: ")
+    print("[bold cyan]Enter mood[/]")
+    sentence = input("> ")
 
     query_embedding = ollama.embeddings(
         model="all-minilm",
@@ -47,7 +49,7 @@ def get_palette():
     palette = []
     for idx in top_indices:
         item = metadata[idx]
-        print(f"{item['name']}: {item['hex']}  ({scores[idx]:.3f})")
+        print(f"[{item['hex']}]{item['name']}: {item['hex']}  ({scores[idx]:.3f})[/]")
         palette.append(item["hex"])
 
     return [hex_to_rgb(color) for color in palette]
