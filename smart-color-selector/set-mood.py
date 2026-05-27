@@ -44,8 +44,6 @@ def get_palette():
     scores = embeddings @ query_vector
     top_indices = np.argsort(scores)[::-1][:5]
 
-    print("\nTop matches:\n")
-
     palette = []
     for idx in top_indices:
         item = metadata[idx]
