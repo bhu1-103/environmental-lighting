@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+VENV_DIR="/home/bhu1/wiz_env"
+cd ~/dev/python/wiz2
+$VENV_DIR/bin/python set-mood.py
