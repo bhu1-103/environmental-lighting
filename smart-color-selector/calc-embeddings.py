@@ -2,6 +2,7 @@ import json
 import ollama
 from datetime import datetime
 from rich import print
+from rich.progress import track
 
 print("loading colors...")
 
@@ -12,7 +13,7 @@ embedded_colors = []
 total = len(colors)
 start_time = datetime.now()
 
-for i,color in enumerate(colors, start=1):
+for i,color in enumerate(track(colors, description="Embedding colors...", transient=False), start=1):
     response = ollama.embeddings(
         model='all-minilm',
         prompt=color["name"]
@@ -24,7 +25,7 @@ for i,color in enumerate(colors, start=1):
         "embedding": response["embedding"]
     })
     
-    if i % 300 == 0:
+    '''if i % 300 == 0:
 
         percentage = i/total*100
         now = datetime.now()
@@ -39,7 +40,7 @@ for i,color in enumerate(colors, start=1):
         print(f"[#ffffff]{i}/{total}[/#ffffff] embeddings done. [#ffffff]{percentage:.2f}%[/#ffffff] complete")
         print(f"Expected runtime: [#ff0066]{ER_minutes}[/#ff0066] minutes [#ff0066]{ER_seconds:.0f}[/#ff0066] seconds")
         print(f"ETA: [#00ffff]{ETA_minutes:.0f}[/#00ffff] minutes [#00ffff]{ETA_seconds:.0f}[/#00ffff] seconds")
-        print("------------------------------------------")
+        print("------------------------------------------")'''
 
 print("Saving to file db.json")
 
