@@ -69,12 +69,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "emb_all-minilm-33m.md",
+                "file": "emb_snowflake-arctic-embed 22m.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "emb_all-minilm-33m"
+              "title": "emb_snowflake-arctic-embed 22m"
             }
           }
         ],
@@ -242,8 +242,8 @@
   },
   "active": "9bec1dea5979bf18",
   "lastOpenFiles": [
-    "emb_all-minilm-22m.md",
     "emb_all-minilm-33m.md",
+    "emb_all-minilm-22m.md",
     "emb_snowflake-arctic-embed 22m.md",
     "emb_snowflake-arctic-embed-33m.md",
     "emb_ibm-granite-33m.md",
