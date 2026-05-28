@@ -16,7 +16,7 @@ Script I made to experiment with current technology and my WiZ light bulb
 - [x] set color based on input sentence (achieved on may 27 2026)
 - [x] find colors. thanks to [color names](https://github.com/meodai/color-names) by meodai
 - [x] embedding all 31k colors (as of may 27 2026) using [all minilm](https://ollama.com/library/all-minilm) and script with ETA
-- [x] generate tags for all colors using [qwen3.5:0.8b](https://ollama.com/library/qwen3.5)
+- [x] generate tags for all colors using [qwen3.5:0.8b](https://ollama.com/library/qwen3.5). It took 6 hours to generate the tags....
 
 | Model | Speed | Quality | Notes |
 |---|---|---|---|
