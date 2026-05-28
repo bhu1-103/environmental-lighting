@@ -11,7 +11,7 @@ Scripts I made to experiment with current technology and my WiZ light bulb
 - [x] mode 2: dynamically update light color to new album as more music plays
 - [x] master script appropriately named "set-stage" saved in $PATH that sets the colors to my room based on current album's album art
 
-<details><summary><b>Mode 1 -> Motivates me to drink more water </b></summary>
+<details><summary><b>Mode 1 -></b> Motivates me to drink more water</summary>
 When i was a 7 year old kid, i hated how i missed a key detail in a TV show where the criminal pretended to be left handed and the main characters caught him and said they always knew he was hiding something because of him switching his dominant hand.
 
 I was so pissed at myself because I failed to notice such a tiny detail. Since then I made it a habit to check every single thing everywhere ~~(which definitely did not lead to me getting hypervigilant)~~.
