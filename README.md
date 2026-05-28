@@ -27,14 +27,14 @@ Scripts I made to experiment with current technology and my WiZ light bulb
 | Model | Speed | Quality | Notes |
 |---|---|---|---|
 | qwen3.5:0.8b | medium | Best overall | Good creativity |
-| qwen3:4b | slowest | Straight up bad | "aktually 🤓" and harder to follow rules |
+| qwen3:4b | slowest | Straight up bad | "aktually 🤓☝️" and harder to follow rules |
 | qwen3:1.7b | fast | Cinematic | Very good but always "soft glow" "ethereal" "muted tones"|
 | qwen3:0.6b | fast | Repetitive | Same as 1.7b but obsessed with "ethereal"|
 | qwen2.5:0.5b | fastest | Alright | Very basic model, just sticks to catchphrases like "ethereal"|
 
 | Model | Speed (generating 31k embeddings) | Quality | Notes | results |
 |---|---|---|---|---|
-| granite:33m | 00:16:03 | linkedin 🤓 | i would use rapidfuzz or pywal instead, like a caveman | [check here](./smart-color-selector/embedding_model_cookoff/emb_ibm-granite-33m.md) |
+| granite:33m | 00:16:03 | linkedin 🧠📉 | <details><summary>i would use rapidfuzz or pywal instead, like a caveman</summary>Truth be told, it seems like this is better for RAG than creative tasks. Still very 🧠🪦 | [check here](./smart-color-selector/embedding_model_cookoff/emb_ibm-granite-33m.md) |
 | all-minilm:22m | 00:09:52 | excellent | it's better than 33m variant, but feels robotic | [check here](./smart-color-selector/embedding_model_cookoff/emb_all-minilm-22m.md) |
 | all-minilm:33m | 00:11:13 | good | no soul + a bit corpo | [check here](./smart-color-selector/embedding_model_cookoff/emb_all-minilm-33m.md) |
 | snowflake-arctic-embed:22m | 00:08:07 | excellent | perfect model for this use case | [check here](./smart-color-selector/embedding_model_cookoff/emb_snowflake-arctic-embed-22m.md) |
