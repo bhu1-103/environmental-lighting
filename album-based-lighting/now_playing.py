@@ -46,7 +46,6 @@ def get_entries(data):
         print("[#ff0000]Nothing currently playing[/#ff0000]")
         print("[#ff3333]is supersonic running?[/#ff3333]")
         print("[#ff6666]attempting to play music on supersonic[/#ff6666]")
-        subprocess.run(["supersonic-desktop", "--play"])
     return entries
 
 entries = get_entries(data)
