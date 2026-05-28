@@ -2,8 +2,11 @@ import json
 import ollama
 from rich.progress import track
 import numpy as np
+import os
+from dotenv import load_dotenv
 
-EMBED_MODEL = "all-minilm"
+load_dotenv()
+EMBED_MODEL = os.getenv("EMBED_MODEL")
 
 with open("color_tags.json") as f:
     colors = json.load(f)
@@ -42,9 +45,9 @@ embeddings = embeddings / np.linalg.norm(
 
 print("Saving files")
 
-with open("metadata.json", "w") as f:
+with open(f"{EMBED_MODEL}.json", "w") as f:
     json.dump(metadata, f)
 
-np.save("embeddings.npy", embeddings)
+np.save(f"{EMBED_MODEL}.npy", embeddings)
 
 print("Done")

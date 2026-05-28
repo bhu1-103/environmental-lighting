@@ -5,13 +5,19 @@ import asyncio
 import colorsys
 from pywizlight import wizlight, PilotBuilder
 from rich import print
+import os
+from dotenv import load_dotenv
 
 light_ip = "192.168.0.10"
+load_dotenv()
+EMBED_MODEL = os.getenv("EMBED_MODEL")
 
-with open("metadata.json") as f:
+print(f"using [bold #ff0066]{EMBED_MODEL}[/]")
+
+with open(f"{EMBED_MODEL}.json") as f:
     metadata = json.load(f)
 
-embeddings = np.load("embeddings.npy")
+embeddings = np.load(f"{EMBED_MODEL}.npy")
 embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
 
 def hex_to_rgb(hexcode):
@@ -34,7 +40,7 @@ def get_palette():
     sentence = input("> ")
 
     query_embedding = ollama.embeddings(
-        model="all-minilm",
+        model=EMBED_MODEL,
         prompt=sentence
     )["embedding"]
 
@@ -42,7 +48,7 @@ def get_palette():
     query_vector = query_vector / np.linalg.norm(query_vector)
 
     scores = embeddings @ query_vector
-    top_indices = np.argsort(scores)[::-1][:5]
+    top_indices = np.argsort(scores)[::-1][:8]
 
     palette = []
     for idx in top_indices:
