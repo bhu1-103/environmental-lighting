@@ -8,9 +8,9 @@ from rich import print
 import os
 from dotenv import load_dotenv
 
-light_ip = "192.168.0.10"
 load_dotenv()
 EMBED_MODEL = os.getenv("EMBED_MODEL")
+light_ip = os.getenv("LIGHT_IP")
 
 print(f"using [bold #ff0066]{EMBED_MODEL}[/]")
 

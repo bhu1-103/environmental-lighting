@@ -31,14 +31,6 @@ Scripts I made to experiment with current technology and my WiZ light bulb
 | qwen3:0.6b | fast | Repetitive | Same as 1.7b but obsessed with "ethereal"|
 | qwen2.5:0.5b | fastest | Alright | Very basic model, just sticks to catchphrases like "ethereal"|
 
-
-| Threads | out |
-|---|---|
-| 1 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:08:55 |
-| 4 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:14:09 |
-
-Turns out parallelizing made it slower, I ran 4 instances of ollama, only to get a higher ETA
-
 | Model | Speed (generating 31k embeddings) | Quality | Notes |
 |---|---|---|---|
 | granite:33m | 00:16:03 | too corpo | i would use rapidfuzz instead, like a caveman |
@@ -48,3 +40,11 @@ Turns out parallelizing made it slower, I ran 4 instances of ollama, only to get
 | snowflake-arctic-embed:33m | 00:09:36 | good | loses character compared to smaller model |
 | nomic embed, etc | 1-2 hours | bad | not really good for this use case |
 
+Turns out parallelizing made it slower, I ran 4 instances of ollama, only to get a higher ETA.
+
+One model used approximately 126 mb vram, I spun up 3 more instances of ollama and models were working with minimal GPU usage, but for some reason, the ETA when 4 models were running concurrently was 5+ minutes higher. It probably had something to do with how my script does the scheduling to 4 independent models. Will fix it later
+
+| Threads | out |
+|---|---|
+| 1 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:08:55 |
+| 4 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:14:09 |
