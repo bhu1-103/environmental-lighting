@@ -7,7 +7,11 @@ Scripts I made to experiment with current technology and my WiZ light bulb
 - [x] environmental lighting based on album art of the music playing right now
 - [x] fetch script to show currently playing music in terminal
 - [x] credentials and mode setting and brightness in .env file
-- [x] <details><summary>mode 1: killswitch when next album starts</summary>
+- [x] mode 1: killswitch when next album starts
+- [x] mode 2: dynamically update light color to new album as more music plays
+- [x] master script appropriately named "set-stage" saved in $PATH that sets the colors to my room based on current album's album art
+
+<details><summary><b>Mode 1 -> Motivates me to drink more water </b></summary>
 When i was a 7 year old kid, i hated how i missed a key detail in a TV show where the criminal pretended to be left handed and the main characters caught him and said they always knew he was hiding something because of him switching his dominant hand.
 
 I was so pissed at myself because I failed to notice such a tiny detail. Since then I made it a habit to check every single thing everywhere ~~(which definitely did not lead to me getting hypervigilant)~~.
@@ -15,8 +19,6 @@ I was so pissed at myself because I failed to notice such a tiny detail. Since t
 To mine and everyone's surprise, it absolutely worked. Habits can be trained after all. If 7 year old me could do that, I could definitely make a habit to drink water every 1 hour or so. 
 
 The lights go dim after every album, reminding me to drink water.</details>
-- [x] mode 2: dynamically update light color to new album as more music plays
-- [x] master script appropriately named "set-stage" saved in $PATH that sets the colors to my room based on current album's album art
 
 # smart-color-selector
 
