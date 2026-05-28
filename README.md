@@ -13,7 +13,7 @@ Script I made to experiment with current technology and my WiZ light bulb
 
 # smart-color-selector
 
-- [ ] set color based on input sentence
+- [x] set color based on input sentence (achieved on may 27 2026)
 - [x] find colors. thanks to [color names](https://github.com/meodai/color-names) by meodai
 - [x] embedding all 31k colors (as of may 27 2026) using [all minilm](https://ollama.com/library/all-minilm) and script with ETA
 - [x] generate tags for all colors using [qwen3.5:0.8b](https://ollama.com/library/qwen3.5)
@@ -23,7 +23,7 @@ Script I made to experiment with current technology and my WiZ light bulb
 | qwen3.5:0.8b | medium | Best overall | Good creativity |
 | qwen3:4b | slowest | Straight up bad | "aktually 🤓" and harder to follow rules |
 | qwen3:1.7b | fast | Cinematic | Very good but always "soft glow" "ethereal" "muted tones"|
-| qwen3:0.6b | fast | Repititive | Same as 1.7b but obsessed with "ethereal"|
+| qwen3:0.6b | fast | Repetitive | Same as 1.7b but obsessed with "ethereal"|
 | qwen2.5:0.5b | fastest | Alright | Very basic model, just sticks to catchphrases like "ethereal"|
 
 - [x] generate new embeddings along with the tags
@@ -34,4 +34,4 @@ Script I made to experiment with current technology and my WiZ light bulb
 | 1 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:08:55 |
 | 4 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:14:09 |
 
-Turns out parallelizing made it slower, I ram 4 instances of ollama, only to get a higher ETA
+Turns out parallelizing made it slower, I ran 4 instances of ollama, only to get a higher ETA
