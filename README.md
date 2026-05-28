@@ -16,3 +16,13 @@ Script I made to experiment with current technology and my WiZ light bulb
 - [ ] set color based on input sentence
 - [x] find colors. thanks to [color names](https://github.com/meodai/color-names) by meodai
 - [x] embedding all 31k colors (as of may 27 2026) using [all minilm](https://ollama.com/library/all-minilm) and script with ETA
+- [x] generate tags for all colors using [qwen3.5:0.8b](https://ollama.com/library/qwen3.5)
+- [x] generate new embeddings along with the tags
+- [ ] parallelize the generation of embeddings as embedding models are tiny
+
+| Threads | out |
+|---|---|
+| 1 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:08:55 |
+| 4 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:14:09 |
+
+Turns out parallelizing made it slower, I ram 4 instances of ollama, only to get a higher ETA
