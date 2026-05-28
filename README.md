@@ -34,16 +34,18 @@ Scripts I made to experiment with current technology and my WiZ light bulb
 
 | Model | Speed (generating 31k embeddings) | Quality | Notes | results |
 |---|---|---|---|---|
-| granite:33m | 00:16:03 | too corpo | i would use rapidfuzz instead, like a caveman | [check here](./smart-color-selector/embedding_model_cookoff/emb_ibm-granite-33m.md) |
-| all-minilm:22m | 00:09:52 | excellent | it's better than 33m model, but it lacks "soul"| [check here](./smart-color-selector/embedding_model_cookoff/emb_all-minilm-22m.md) |
+| granite:33m | 00:16:03 | linkedin 🤓 | i would use rapidfuzz or pywal instead, like a caveman | [check here](./smart-color-selector/embedding_model_cookoff/emb_ibm-granite-33m.md) |
+| all-minilm:22m | 00:09:52 | excellent | it's better than 33m variant, but feels robotic | [check here](./smart-color-selector/embedding_model_cookoff/emb_all-minilm-22m.md) |
 | all-minilm:33m | 00:11:13 | good | no soul + a bit corpo | [check here](./smart-color-selector/embedding_model_cookoff/emb_all-minilm-33m.md) |
 | snowflake-arctic-embed:22m | 00:08:07 | excellent | perfect model for this use case | [check here](./smart-color-selector/embedding_model_cookoff/emb_snowflake-arctic-embed-22m.md) |
 | snowflake-arctic-embed:33m | 00:09:36 | good | loses character compared to smaller model | [check here](./smart-color-selector/embedding_model_cookoff/emb_snowflake-arctic-embed-33m.md) |
 | <details><summary>larger models</summary>nomic-embed-moe, bge-m3, mxbai-embed-large</details> | 1-2 hours | bad | not really good for this use case | <details><summary>NA</summary>not gonna waste any more time</details> |
 
-One thing I learnt after using all these models is that <b>bigger is better</b> or <b>newer is better</b> is now always true
+One thing I learnt after using all these models is that <b>~~bigger is better~~</b> or <b>~~newer is better~~</b> is now always true.
 
-Turns out parallelizing made it slower, I ran 4 instances of ollama, only to get a higher ETA.
+## issues/to-do-list
+
+<details><summary>Turns out parallelizing made it slower, I ran 4 instances of ollama, only to get a higher ETA.</summary>
 
 One model used approximately 126 mb vram, I spun up 3 more instances of ollama and models were working with minimal GPU usage, but for some reason, the ETA when 4 models were running concurrently was 5+ minutes higher. It probably had something to do with how my script does the scheduling to 4 independent models. Will fix it later
 
@@ -51,3 +53,4 @@ One model used approximately 126 mb vram, I spun up 3 more instances of ollama a
 |---|---|
 | 1 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:08:55 |
 | 4 | Embedding colors and tags ━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   3% 0:14:09 |
+</details>
