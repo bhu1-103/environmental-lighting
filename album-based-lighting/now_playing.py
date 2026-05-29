@@ -163,7 +163,7 @@ def transition(a,b,t):
     return a + (b - a) * t
 
 async def light_update():
-    light = wizlight("192.168.0.10")
+    light = wizlight(IP_ADDRESS)
     current_hue = top_hues[0]
 
     while True:
