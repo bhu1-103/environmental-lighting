@@ -23,6 +23,7 @@ USERNAME = os.getenv("NAVIDROME_USERNAME")
 PASSWORD = os.getenv("NAVIDROME_PASSWORD")
 MODE = os.getenv("MODE")
 BRIGHTNESS = int(os.getenv("BRIGHTNESS"))
+IP_ADDRESS = os.getenv("IP_ADDRESS")
 
 params = {
         "u": USERNAME,
@@ -67,7 +68,7 @@ async def poll_music():
     entry = entries[-1]
     last_title = None
     last_album = entry["album"]
-    light = wizlight("192.168.0.10")
+    light = wizlight(IP_ADDRESS)
     await light.turn_on(PilotBuilder(brightness = BRIGHTNESS))
     while True:
         r1 = requests.get(get_url, params=params)
