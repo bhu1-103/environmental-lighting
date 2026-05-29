@@ -39,10 +39,6 @@ BANNED = {
 MAX_RETRIES = 4
 
 
-# -----------------------------------
-# CLEANING
-# -----------------------------------
-
 def clean_tags(raw, color_name):
 
     tags = [
@@ -66,20 +62,12 @@ def clean_tags(raw, color_name):
     return tags
 
 
-# -----------------------------------
-# LOAD COLORS
-# -----------------------------------
-
 with open("colornames.json") as f:
     colors = json.load(f)
 
 # demo mode
 # colors = colors[:10]
 
-
-# -----------------------------------
-# LOAD EXISTING PROGRESS
-# -----------------------------------
 
 output = []
 completed = set()
@@ -96,10 +84,6 @@ if Path(OUTPUT_FILE).exists():
 
     print(f"Resuming from {len(completed)} completed colors")
 
-
-# -----------------------------------
-# MAIN LOOP
-# -----------------------------------
 
 remaining = [
     color for color in colors
