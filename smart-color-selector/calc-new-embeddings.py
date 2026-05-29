@@ -21,7 +21,6 @@ for color in track(colors, description="Embedding colors and tags"):
 
 {" ".join(color["tags"])}
 """
-
     response = ollama.embeddings(
         model=EMBED_MODEL,
         prompt=embedding_text
