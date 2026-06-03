@@ -1,4 +1,4 @@
-Scripts I made to experiment with current technology and my WiZ light bulb
+Scripts I made to experiment with new technology and my WiZ light bulb
 
 # environmental-lighting
 
