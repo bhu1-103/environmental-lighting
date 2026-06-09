@@ -3,6 +3,7 @@ Scripts I made to experiment with new technology and my WiZ light bulb
 # environmental-lighting
 
 ![Fetch Script](./assets/fetch_script.png)
+![Room Lighting](./assets/room-lighting.png)
 
 - [x] environmental lighting based on album art of the music playing right now
 - [x] fetch script to show currently playing music in terminal
@@ -29,6 +30,7 @@ The lights go dim after every album, reminding me to drink water.</details>
 - [x] embedding all 31k colors (as of may 27 2026) using [all minilm](https://ollama.com/library/all-minilm) and script with ETA
 - [x] generate tags for all colors using [qwen3.5:0.8b](https://ollama.com/library/qwen3.5). It took 6 hours to generate the tags.... (Well worth it)
 - [x] tested various embedding models and finalized -> snowflake-arctic-embed:22m
+- [x] added arctic embeddings and color index file to releases
 - [ ] parallelize the generation of embeddings as embedding models are tiny
 - [ ] use tiny llm to even generate the prompts as well and keep cycling color schemes every 1 hour or so
 - [ ] auto detect mood based on what's on screen and probably use an llm that does vision as well
