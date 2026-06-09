@@ -2,8 +2,8 @@ Scripts I made to experiment with new technology and my WiZ light bulb
 
 # environmental-lighting
 
-![Fetch Script](./assets/fetch_script.png)
-![Room Lighting](./assets/room-lighting.png)
+![Fetch Script](./assets/fetch_script.webp)
+![Room Lighting](./assets/room-lighting.webp)
 
 - [x] environmental lighting based on album art of the music playing right now
 - [x] fetch script to show currently playing music in terminal
@@ -23,7 +23,7 @@ The lights go dim after every album, reminding me to drink water.</details>
 
 # smart-color-selector
 
-![Over-Engineered Light Bulb](./assets/set-mood.png)
+![Over-Engineered Light Bulb](./assets/set-mood.webp)
 
 - [x] set color based on prompt (achieved on may 27 2026)
 - [x] find colors. thanks to [color names](https://github.com/meodai/color-names) by meodai
