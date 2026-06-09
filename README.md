@@ -3,7 +3,7 @@ Scripts I made to experiment with new technology and my WiZ light bulb
 # environmental-lighting
 
 ![Fetch Script](./assets/fetch_script.webp)
-![Room Lighting](./assets/room-lighting.webp)
+<img src="./assets/room-lighting.webp" width="300">
 
 - [x] environmental lighting based on album art of the music playing right now
 - [x] fetch script to show currently playing music in terminal
